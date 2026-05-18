@@ -34,20 +34,23 @@ environ.Env.read_env(os.path.join(BASE_DIR.parent, ".env"))
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY", default="django-insecure-vercel-fallback-key-928371928371")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = env("DEBUG", default=True)
 # This allows us to use the VS Code debugger to break on exceptions
-DEBUG_PROPAGATE_EXCEPTIONS = env("DEBUG")
+DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
 # Configure the domain name using the environment variable
-# that Azure automatically creates for us.
-if env.get_value("WEBSITE_HOSTNAME", default=None):
+# that Azure or Vercel automatically creates for us.
+if os.environ.get("VERCEL"):
+    ALLOWED_HOSTS = ["*"]
+    CSRF_TRUSTED_ORIGINS = ["https://*.vercel.app"]
+elif env.get_value("WEBSITE_HOSTNAME", default=None):
     ALLOWED_HOSTS = [os.environ["WEBSITE_HOSTNAME"]]
     CSRF_TRUSTED_ORIGINS = ["https://" + os.environ["WEBSITE_HOSTNAME"]]
 else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
     CSRF_TRUSTED_ORIGINS = [
         "http://localhost:8000",
         "http://127.0.0.1:8000",
@@ -57,7 +60,8 @@ else:
             f"https://{env('CODESPACE_NAME')}-8000.{env('GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN')}"
         )
 
-ADMIN_URL = env("ADMIN_URL")
+ADMIN_URL = env("ADMIN_URL", default="admin/")
+
 
 # Application definition
 
