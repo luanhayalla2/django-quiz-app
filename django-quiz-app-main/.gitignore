@@ -1,9 +1,0 @@
-.venv
-__pycache__/
-staticfiles/
-.coverage
-.env
-.azure
-pytest.xml
-pytest-coverage.txt
-coverage.xml

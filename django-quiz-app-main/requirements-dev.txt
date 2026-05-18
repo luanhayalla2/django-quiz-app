@@ -1,8 +1,0 @@
--r src/requirements.txt
-black
-pre-commit
-ruff
-coverage
-pytest-django
-pytest-cov
-pytest-dotenv
