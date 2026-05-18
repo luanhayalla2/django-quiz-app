@@ -92,6 +92,7 @@ python manage.py runserver
 ```
 
 Acesse o sistema no seu navegador:
+
 *   **Página Inicial**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 *   **Painel Admin**: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
