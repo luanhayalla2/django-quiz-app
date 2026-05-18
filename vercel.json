@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "django-quiz-app-main/src/quizsite/wsgi.py",
+      "src": "src/quizsite/wsgi.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
@@ -12,11 +12,11 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "django-quiz-app-main/src/static/$1"
+      "dest": "src/static/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "django-quiz-app-main/src/quizsite/wsgi.py"
+      "dest": "src/quizsite/wsgi.py"
     }
   ]
 }
