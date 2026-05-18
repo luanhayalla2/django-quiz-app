@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Quiz App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .quiz-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .quiz-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: white;
+        }
+        .quiz-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+        .quiz-name {
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        .btn-start {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+        }
+        .welcome-msg {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">QuizApp</a>
+        <div class="nav-links">
+            <a href="{% url 'quizzes:ranking' %}" style="margin-right: 1.5rem;">Ranking</a>
+            {% if user.is_authenticated %}
+                <span>Hello, <strong>{{ user.username }}</strong></span>
+                {% if user.is_staff %}
+                    <a href="/admin">Admin Panel</a>
+                {% endif %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}" style="color: var(--primary)">Register</a>
+            {% endif %}
+        </div>
+
+    </nav>
+
+    <div class="container">
+        {% if user.is_authenticated %}
+            <div class="welcome-msg">
+                Welcome back! Ready for a challenge?
+            </div>
+        {% endif %}
+
+        <h1>Available Quizzes</h1>
+        
+        {% if quiz_list %}
+            <div class="quiz-grid">
+                {% for quiz in quiz_list %}
+                    <a href="{% url 'quizzes:display_quiz' quiz.id %}" class="quiz-card">
+                        <span class="quiz-name">{{ quiz.name }}</span>
+                        <span class="btn-start">Start Quiz</span>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="color: var(--text-muted)">No quizzes are available right now. Check back later!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
