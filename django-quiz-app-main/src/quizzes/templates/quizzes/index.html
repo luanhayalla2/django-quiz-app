@@ -102,6 +102,7 @@
     <nav>
         <a href="/" class="logo">QuizApp</a>
         <div class="nav-links">
+            <a href="{% url 'quizzes:ranking' %}" style="margin-right: 1.5rem;">Ranking</a>
             {% if user.is_authenticated %}
                 <span>Hello, <strong>{{ user.username }}</strong></span>
                 {% if user.is_staff %}
@@ -113,6 +114,7 @@
                 <a href="{% url 'register' %}" style="color: var(--primary)">Register</a>
             {% endif %}
         </div>
+
     </nav>
 
     <div class="container">

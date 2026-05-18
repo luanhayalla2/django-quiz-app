@@ -59,8 +59,20 @@ def grade_question(request, question_id):
     if answer is None:
         return render(request, "quizzes/partial.html", {"error": "Question must have an answer"}, status=422)
     is_correct = answer.is_correct(request.POST.get("answer"))
+    if is_correct and request.user.is_authenticated:
+        from .models import UserScore
+        user_score, created = UserScore.objects.get_or_create(user=request.user)
+        user_score.score += 10
+        user_score.save()
     return render(
         request,
         "quizzes/partial.html",
         {"is_correct": is_correct, "correct_answer": answer.correct_answer},
     )
+
+
+def ranking(request):
+    from .models import UserScore
+    scores = UserScore.objects.select_related("user").order_by("-score")[:20]
+    return render(request, "quizzes/ranking.html", {"scores": scores})
+

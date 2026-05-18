@@ -95,12 +95,41 @@ Acesse o sistema no seu navegador:
 *   **Página Inicial**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 *   **Painel Admin**: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
-## 🧪 Evidências de Teste
+## 🧪 Testes Automatizados (Pytest)
 
-Durante a validação, as seguintes evidências foram geradas:
+O projeto conta com uma suíte de testes robusta e automatizada integrada com o **Pytest** e o **pytest-django**, garantindo proteção contra regressões e validação contínua de rotas críticas:
 
-1.  **Servidor em Execução**: Print do terminal confirmando o Django rodando sem erros.
-2.  **Interface de Usuário**: Prints da tela inicial, fluxos de login e cadastro.
-3.  **Acesso Administrativo**: Validação do painel de controle do superusuário logado.
+### Como Executar os Testes:
+```bash
+# Executar todos os testes no ambiente virtual
+pytest
+```
 
-*Este projeto foi revisado e mantido para atender aos critérios da Atividade Prática.*
+### Funcionalidades Testadas:
+* **Acessibilidade do Login:** Verifica se a rota `/accounts/login/` está ativa (HTTP 200) e exibe os elementos corretos da interface.
+* **Fluxos de Redirecionamento:** Valida se o login e o logout redirecionam com segurança o usuário de volta à página inicial (`LOGIN_REDIRECT_URL` e `LOGOUT_REDIRECT_URL`).
+* **Visualização e Validação do Quiz:** Testes unitários e de integração para a listagem e submissão de respostas de quizzes.
+
+---
+
+## 🎨 Ajustes Finos de Layout e Usabilidade Recentes
+
+### 1. Botão de Retorno (Back Button)
+Adicionado um botão elegante e responsivo **"← Back to Quizzes"** no topo da tela de resolução de perguntas (`display.html`), facilitando a navegação de volta para a lista geral de quizzes a qualquer momento.
+
+### 2. Resolução do Bug de Redirecionamento 404
+Correção de um bug de fluxo de autenticação onde o Django redirecionava por padrão para `/accounts/profile/` (gerando um erro 404). O fluxo foi padronizado para a home page (`/`) e coberto por testes.
+
+### 3. Correção de Formato do Banco de Dados (seed_data.json)
+Resolução de um bug visual onde as datas e opções de múltipla escolha se dividiam caractere por caractere verticalmente. Os dados agora carregam como uma estrutura JSON nativa válida (`choices`), renderizando em caixas organizadas e fáceis de ler.
+
+### 4. Perguntas Atualizadas para a Última Versão do Python
+O banco de dados de exemplo foi atualizado de forma dinâmica para incluir as versões estáveis mais recentes do Python (3.12 e 3.13) na pergunta de trivia correspondente.
+
+---
+
+## 📋 Relatório Completo de Evidências
+
+Todo o histórico de comandos executados, logs do terminal, arquivos de testes e capturas de tela estão catalogados no documento oficial:
+> 📂 **Acesse aqui:** [evidencias_django_quiz.md](file:///C:/Users/aluno/.gemini/antigravity/brain/4364d40d-9c59-48a4-b595-6dec5ba9c9ae/evidencias_django_quiz.md)
+

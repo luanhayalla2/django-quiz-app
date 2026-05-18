@@ -49,3 +49,13 @@ class MultipleChoiceAnswer(Answer):
 
     def __str__(self) -> str:
         return f"{self.correct_answer} from {self.choices}"
+
+
+class UserScore(models.Model):
+    from django.contrib.auth.models import User
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="score_profile")
+    score = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f"{self.user.username}: {self.score} pts"
+
