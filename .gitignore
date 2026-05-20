@@ -7,3 +7,4 @@ staticfiles/
 pytest.xml
 pytest-coverage.txt
 coverage.xml
+venv/
